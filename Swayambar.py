@@ -15,6 +15,8 @@ Noah Spurrier 2007
 import os, sys
 import tkinter
 import re
+import unicodedata
+
 from PIL import ImageTk, Image
 
 def clickOnButton(event, imgPath):
@@ -30,7 +32,7 @@ def RclickOnButton(event, imgPath):
     selected = "Selected.opml"
     if len(sys.argv) > 3:
         selected = sys.argv[2]
-    with open("R"+ selected, "a+") as txtfile:
+    with open("R"+ selected, "a+",encoding="utf-8") as txtfile:
         txtfile.write(imgPath + "\n")
 
 def MclickOnButton(event, imgPath):
