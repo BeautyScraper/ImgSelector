@@ -8,24 +8,9 @@ import tkinter
 import re
 import random
 from locale import currency
-import time
 
 from PIL import ImageTk, Image
 
-vipshome = 'C:\\app\\vips-dev-8.9\\bin\\'
-os.environ['PATH'] = vipshome + ';' + os.environ['PATH']
-
-def pyvipsResize(filePath,nh,nw):
-    # import pdb;pdb.set_trace()
-    resizedImagePath = "temporary.jpg"
-    delCmd = 'del /q/f "%s"' % resizedImagePath
-    os.system(delCmd)
-    Reference = 'vips VipsThumbnailFile "C:\temp\h\hr889-002.jpg" "C:\temp\h\th_hr889-002.jpg" 3360 --height 2240'
-    cmd = 'vips VipsThumbnailFile "%s" "%s" %s --height %s' % (filePath,resizedImagePath,str(nw),str(nh))
-    os.system(cmd)
-    currentImage = Image.open(resizedImagePath)
-    return currentImage
-    
 
 def isComplete(imgPath):
     try:
@@ -120,7 +105,6 @@ def getImgList(path):
     imglist = []
     f = os.listdir(path)
     f.sort(key=lambda x: os.path.getmtime(os.path.join(path, x)))
-    # f.sort(key=lambda x: os.path.getsize(os.path.join(path, x)))
     for files in f[::-1]:
         if len(imglist) > 1000:
             break
@@ -163,14 +147,9 @@ dirlist = getImgList(inDirPath)
 # random.shuffle(dirlist)
 old_label_image = None
 temp = [0]
-f = 0
-i = 0
-bestDim = 10668000
-minDimensionFoundYet = 30105600
-minDimensionFoundYet = 4096 * 4096
-while f < len(dirlist):
+
+for f in range(0, len(dirlist), atATime):
     f = temp[0]
-    print("previous value of i is",i or None)
     try:
         # print(dirlist[f])
         tkpiArray = []
@@ -178,7 +157,7 @@ while f < len(dirlist):
 
         with open(outTxtPath, "a+") as txtfile:
             if f > 0 or len(dirlist) < 2 * atATime:
-                for index in range(i-atATime,f, 1):
+                for index in range(f - 2 * atATime, f - atATime, 1):
                     if index > 0:
                         # print("writing index %d",index)
                         txtfile.write(inDirPath + dirlist[index] + "\n")
@@ -194,15 +173,9 @@ while f < len(dirlist):
                     currentImage = Image.open(
                         r"F:\Paradise\stuff\Filtered\too hot\H090520_TulipJoshiTulipJoshi3 W4.jpg")
                 else:
-                
-                    # start = time.time()
                     currentImage = Image.open(inDirPath + dirlist[i])
-                    # print("opening took: ", time.time() - start)
                 # if currentImage.verify():
                 #     print("Verifeid")
-                # start = time.time()
-                imageOldHeight = currentImage.size[1]
-                imageOldWidth = currentImage.size[0]
                 if r == 0:
                     # print(width)
                     (imgWidth, imgHeight) = maintainAspectFillWindow(currentImage, int(height), int(width / 2))
@@ -221,27 +194,7 @@ while f < len(dirlist):
                     (imgWidth, imgHeight) = maintainAspectFillWindow(currentImage,
                                                                      int((height / 2) - dim[r][1] + height / 2),
                                                                      int(width - dim[r][0]))
-                # print("finding new height took: ", time.time() - start)
-                if imageOldHeight * imageOldWidth <= bestDim:
-                    # start = time.time()
-                    tkpi = ImageTk.PhotoImage(currentImage.resize((imgWidth, imgHeight), Image.ANTIALIAS))
-                    # endTimePil = time.time() - start
-                # print("Actual resizing took: ", time.time() - start)
-                
-                if imageOldHeight * imageOldWidth > bestDim:
-                    start = time.time()
-                    vipsResizedImage = pyvipsResize(inDirPath + dirlist[i],imgHeight,imgWidth)
-                    tkpi = ImageTk.PhotoImage(vipsResizedImage)
-                    # endTimeVips = time.time() - start
-                    # diffTime = endTimePil-endTimeVips
-                    
-                    
-                    # print("pil - vips = ",  diffTime)
-                    # if  diffTime > 0 and diffTime < minDimensionFoundYet:
-                        # minDimensionFoundYet = imageOldHeight * imageOldWidth
-                    # print(minDimensionFoundYet)
-                
-                
+                tkpi = ImageTk.PhotoImage(currentImage.resize((imgWidth, imgHeight), Image.ANTIALIAS))
                 tkpiArray.append(tkpi)
                 # print("imgH%dimgW%dX%dY%d" % (imgHeight,imgWidth,dim[r][0],dim[r][1]))
                 label_image = tkinter.Button(root, image=tkpiArray[-1])
@@ -283,7 +236,6 @@ while f < len(dirlist):
             continueBtn.bind("<Button-3>", lambda e, index=temp, a=atATime: previousPhoto(e, index, a))
             root.bind("<Up>", lambda e, index=temp, a=atATime: previousPhoto(e, index, a))
             root.bind("<Control-Key-Down>", lambda e, index=temp, a=atATime: HighJump(e, index, a))
-            root.bind("<Control-Key-Up>", lambda e, index=temp, a=atATime*10: previousPhoto(e, index, a))
             print("after event value is =" + str(temp[0]))
             print("value of f is" + str(f))
             root.title(dirlist[temp[0]]+"                                                           "+dirlist[temp[0]+1])
@@ -316,6 +268,5 @@ while f < len(dirlist):
         # print(e.__str__())
         if "truncated" in e.__str__():
             f = f + 1
-    f += atATime
-    
+
 # root.destroy()

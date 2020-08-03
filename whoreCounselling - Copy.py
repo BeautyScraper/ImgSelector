@@ -120,7 +120,6 @@ def getImgList(path):
     imglist = []
     f = os.listdir(path)
     f.sort(key=lambda x: os.path.getmtime(os.path.join(path, x)))
-    # f.sort(key=lambda x: os.path.getsize(os.path.join(path, x)))
     for files in f[::-1]:
         if len(imglist) > 1000:
             break

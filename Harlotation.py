@@ -7,6 +7,7 @@ def getFileMeta(fileName, path):
     with open(path + "FileUrl.pkl", "rb") as inFile:
         fileMeta = pickle.load(inFile)
         # resultUrl = fileMeta[fileName]
+    # import pdb;pdb.set_trace()
     return fileMeta[fileName]
 
 
@@ -15,6 +16,7 @@ def writeUrls(path):
     for files in allFiles:
         # print(files)
         if ".jp" in files:
+            # import pdb;pdb.set_trace()
             Url = getFileMeta(files, path + "\\..\\")
             print(Url)
 
@@ -26,4 +28,7 @@ if __name__ == "__main__":
         writeUrls(r"D:\Developed\Automation\GalleryDownloader\NewBabes\www.foxhq.comGallery\inKoChodo")
         pass
     else:
+        # print("hell")
+        # import pdb;pdb.set_trace()
+        
         writeUrls(sys.argv[1])
