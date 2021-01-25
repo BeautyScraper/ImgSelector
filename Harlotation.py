@@ -8,7 +8,10 @@ def getFileMeta(fileName, path):
         fileMeta = pickle.load(inFile)
         # resultUrl = fileMeta[fileName]
     # import pdb;pdb.set_trace()
-    return fileMeta[fileName]
+    if fileName in fileMeta:
+        return fileMeta[fileName]
+    else:
+        return ""
 
 
 def writeUrls(path):
@@ -30,5 +33,7 @@ if __name__ == "__main__":
     else:
         # print("hell")
         # import pdb;pdb.set_trace()
-        
-        writeUrls(sys.argv[1])
+        try:
+            writeUrls(sys.argv[1])
+        except Exception as e:
+            print(e)

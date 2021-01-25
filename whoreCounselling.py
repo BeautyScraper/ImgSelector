@@ -12,7 +12,7 @@ import time
 
 from PIL import ImageTk, Image
 
-vipshome = 'C:\\app\\vips-dev-8.9\\bin\\'
+vipshome = 'C:\\app\\vips-dev-8.10\\bin\\'
 os.environ['PATH'] = vipshome + ';' + os.environ['PATH']
 
 def pyvipsResize(filePath,nh,nw):
@@ -119,6 +119,7 @@ def button_click_exit_mainloop(event):
 def getImgList(path):
     imglist = []
     f = os.listdir(path)
+    print("total files inside the directory: %s" % str(len(f)))
     f.sort(key=lambda x: os.path.getmtime(os.path.join(path, x)))
     # f.sort(key=lambda x: os.path.getsize(os.path.join(path, x)))
     for files in f[::-1]:
@@ -139,8 +140,8 @@ def getImgList(path):
 root = tkinter.Tk()
 # root.bind("<Button>", button_click_exit_mainloop)
 root.geometry('+%d+%d' % (100, 100))
-width = int(1366 / 2)
-height = 675
+width = int(1920 / 2)
+height = 1080
 root.geometry('%dx%d+%d+%d' % (width, height + 20, 0, 0))
 root.configure(background='white')
 imgHeight = 306
@@ -149,7 +150,7 @@ imgWidth = 768
 # imgWidth = width/4
 inDirPath = r'C:\Heaven\Haven\brothel\bhabhi aur bhabhi aur saali ne Mehtar se chudwaya sinisterBabes'
 outTxtPath = "scanned.opml"
-
+# import pdb;pdb.set_trace()
 if len(sys.argv) > 1:
     inDirPath = sys.argv[1]
     if len(sys.argv) > 2:
