@@ -119,6 +119,7 @@ def button_click_exit_mainloop(event):
 def getImgList(path):
     imglist = []
     f = os.listdir(path)
+    print("total files inside the directory: %s" % str(len(f)))
     f.sort(key=lambda x: os.path.getmtime(os.path.join(path, x)))
     # f.sort(key=lambda x: os.path.getsize(os.path.join(path, x)))
     for files in f[::-1]:
@@ -149,7 +150,7 @@ imgWidth = 768
 # imgWidth = width/4
 inDirPath = r'C:\Heaven\Haven\brothel\bhabhi aur bhabhi aur saali ne Mehtar se chudwaya sinisterBabes'
 outTxtPath = "scanned.opml"
-
+# import pdb;pdb.set_trace()
 if len(sys.argv) > 1:
     inDirPath = sys.argv[1]
     if len(sys.argv) > 2:
