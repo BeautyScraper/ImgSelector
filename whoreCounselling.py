@@ -256,7 +256,7 @@ while f < len(dirlist):
                     root.bind('4', lambda e, index=inDirPath + dirlist[i]: Four5OnButton(e, index))
                     root.bind('<a>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
                     root.bind('<A>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
-                    root.bind('<Control-Key-Left>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
+                    root.bind('<Control-Key-Left>', lambda e, index=inDirPath + dirlist[i]: MclickOnButton(e, index))
                 if r == 1:
                     root.bind('<Right>', lambda e, index=inDirPath + dirlist[i]: clickOnButton(e, index))
                     root.bind('<space>', lambda e, index=inDirPath + dirlist[i]: MclickOnButton(e, index))
@@ -264,7 +264,7 @@ while f < len(dirlist):
                     root.bind('5', lambda e, index=inDirPath + dirlist[i]: Four5OnButton(e, index))
                     root.bind('<d>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
                     root.bind('<D>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
-                    root.bind('<Control-Key-Right>', lambda e, index=inDirPath + dirlist[i]: ADOnButton(e, index))
+                    root.bind('<Control-Key-Right>', lambda e, index=inDirPath + dirlist[i]: MclickOnButton(e, index))
 
                 label_image.bind('<Button-1>', lambda e, index=inDirPath + dirlist[i]: clickOnButton(e, index))
                 label_image.bind('<Button-2>', lambda e, index=inDirPath + dirlist[i]: MclickOnButton(e, index))
